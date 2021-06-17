@@ -9,7 +9,24 @@ class FeedbackCollector < ApplicationService
 
   def call
     response = Faraday.post(FEEDBACK_URL, QUERY_PARAMS)
-    # byebug
-    puts response
+    return unless response.status == 200
+
+    feedbacks = JSON.parse(response.body)['feedbacks']
+    save_feedbacks(feedbacks)
+  end
+  
+  private
+  
+  def save_feedbacks(feedbacks)
+    Feedback.create(feedbacks.map do |f|
+      {
+        feedback_id: f['id'],
+        imt_id:      f['imtId'],
+        nm_id:       f['nmId'],
+        wb_user_id:  f['wbUserId'],
+        rank:        f['rank'],
+        left_at:     f['createdDate']
+      }
+    end)
   end
 end
