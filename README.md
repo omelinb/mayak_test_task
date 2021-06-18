@@ -2,7 +2,7 @@
 Mayak Test Task
 -----------
 
-Simple service that collect feedbacks from public api.
+Simple service that collects feedbacks from public api.
 
 
 System Dependencies
