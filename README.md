@@ -35,4 +35,8 @@ Run tests
 bundle exec rspec spec
 ```
 
+API
+---
 
+- /api/v1/feedbacks/activity?imt_id=19400834 &nbsp;  
+- /api/v1/feedbacks/most_this_week &nbsp;
