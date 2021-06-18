@@ -9,8 +9,6 @@ class FeedbackCollectorService < ApplicationService
 
     feedbacks = JSON.parse(response.body)['feedbacks']
 
-    puts "We got #{feedbacks.size} feedbacks."
-
     save_feedbacks(feedbacks)
   end
   
