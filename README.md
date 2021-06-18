@@ -1,24 +1,38 @@
-# README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Mayak Test Task
+-----------
 
-Things you may want to cover:
+Simple service that collect feedbacks from public api.
 
-* Ruby version
 
-* System dependencies
+System Dependencies
+-------------------
 
-* Configuration
+- Ruby 2.7.1 (install with [rbenv](https://github.com/sstephenson/rbenv))
+- Rails 6.0.3.7
+- PostgreSQL
 
-* Database creation
+Project Install
+-------------------
+```shell
+git clone git@github.com:omelinb/mayak_test_task.git
+bundle install
+```
 
-* Database initialization
+Database creation
+-----------------
 
-* How to run the test suite
+Create database
+```shell
+bundle exec rails db:create  
+bundle exec rails db:migrate  
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+Run tests
+-----------------
 
-* Deployment instructions
+```
+bundle exec rspec spec
+```
 
-* ...
+
