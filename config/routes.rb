@@ -1,3 +1,8 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  namespace :api do
+    namespace :v1 do
+      get 'feedbacks_activity/:imt_id', to: 'feedbacks#feedbacks_activity'
+      get 'most_commented_in_week', to: 'feedbacks#most_commented_in_week'
+    end
+  end
 end

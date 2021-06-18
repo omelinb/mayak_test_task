@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 2021_06_16_020535) do
   create_table "feedbacks", force: :cascade do |t|
     t.string "feedback_id"
     t.integer "imt_id"
-    t.integer "nm_id"
     t.integer "wb_user_id"
     t.decimal "rank", precision: 10, scale: 6, default: "0.0"
     t.datetime "left_at"

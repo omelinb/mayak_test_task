@@ -1,4 +1,4 @@
-class FeedbackCollector < ApplicationService
+class FeedbackCollectorService < ApplicationService
   FEEDBACK_URL = 'https://public-feedbacks.wildberries.ru/api/v1/feedbacks'
   QUERY_PARAMS = {
     skip: 0,
@@ -11,7 +11,12 @@ class FeedbackCollector < ApplicationService
     response = Faraday.post(FEEDBACK_URL, QUERY_PARAMS)
     return unless response.status == 200
 
+    puts "Collect feedbacks for product with imt_id #{ENV['IMTID']}."
+
     feedbacks = JSON.parse(response.body)['feedbacks']
+
+    puts "We got #{feedbacks.size} feedbacks."
+
     save_feedbacks(feedbacks)
   end
   
@@ -22,7 +27,6 @@ class FeedbackCollector < ApplicationService
       {
         feedback_id: f['id'],
         imt_id:      f['imtId'],
-        nm_id:       f['nmId'],
         wb_user_id:  f['wbUserId'],
         rank:        f['rank'],
         left_at:     f['createdDate']
