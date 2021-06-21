@@ -1,24 +1,34 @@
 class FeedbackCollectorService < ApplicationService
   FEEDBACK_URL = 'https://public-feedbacks.wildberries.ru/api/v1/feedbacks'
 
-  def call
-    response = Faraday.post(FEEDBACK_URL, query_params)
-    return unless response.status == 200
-
+  def call    
     puts "Collect feedbacks for product with imt_id #{ENV['IMTID']}."
 
-    feedbacks = JSON.parse(response.body)['feedbacks']
+    skip = 0
+    loop do
+      response = Faraday.post(FEEDBACK_URL, query_params(skip))
 
-    save_feedbacks(feedbacks)
+      if response.status != 200
+        puts "Something went wrong. Response status code is #{response.status}."
+        return
+      end
+
+      feedbacks = JSON.parse(response.body)['feedbacks']
+
+      return if feedbacks.empty?
+
+      save_feedbacks(feedbacks)
+      skip += 10
+    end
   end
   
   private
   
-  def query_params
-    imt_id = ENV['IMTIDZ'].to_i
+  def query_params(skip)
+    imt_id = ENV['IMTID'].to_i
 
     {
-      skip: 0,
+      skip: skip,
       imtId: imt_id,
       order: 'dateDesc',
       take: 10
